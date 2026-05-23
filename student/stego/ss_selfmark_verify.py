@@ -114,8 +114,18 @@ def maybe_mark(path, status):
 def main():
     parser = argparse.ArgumentParser(description="Verify spread-spectrum self-marking watermark.")
     parser.add_argument("input")
+    parser.add_argument("--sign-file")
     parser.add_argument("--key", required=True, type=int)
     args = parser.parse_args()
+
+    if args.sign_file:
+        with open(args.sign_file, "rb") as handle:
+            message_bytes = handle.read().strip()
+    else:
+        message_bytes = b"audio watermark auth"
+    if not message_bytes:
+        raise SystemExit("message rong")
+    derived_key = f"{args.key}:{hashlib.sha256(message_bytes).hexdigest()[:16]}"
 
     _, audio = read_wav(args.input)
     frame_count = len(audio) // FRAME_LEN
@@ -125,7 +135,7 @@ def main():
     best_score = -1.0
     best_agreement = 0.0
     for shift in range(max_shift + 1):
-        score, agreement = evaluate(audio, args.key, shift)
+        score, agreement = evaluate(audio, derived_key, shift)
         if score > best_score + 0.005 or (
             abs(score - best_score) <= 0.005 and shift < best_shift
         ):

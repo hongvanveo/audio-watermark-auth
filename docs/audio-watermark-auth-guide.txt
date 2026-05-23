@@ -13,19 +13,104 @@ Tep can quan tam:
 - ~/stego/make_cover.py
 - ~/stego/ss_selfmark_embed.py
 - ~/stego/ss_selfmark_verify.py
+- ~/stego/embed_task.py
+- ~/stego/verify_task.py
 - ~/stego/attack.py
 - ~/stego/run_demo.py
 
-Cac lenh goi y:
+Thuc hien:
 
 cd ~/stego
-python3 ss_selfmark_embed.py cover.wav marked_ss.wav --key 12345
+
+Tao file message.txt:
+
+nano message.txt
+
+Nhap noi dung watermark, vi du:
+
+audio watermark auth
+
+Mo file:
+
+nano embed_task.py
+
+Trong file nay, sua hai dong TODO:
+
+AUDIO_FILE = ""
+SIGN_FILE = ""
+
+thanh:
+
+AUDIO_FILE = "cover.wav"
+SIGN_FILE = "message.txt"
+
+Sau do chay:
+
+python3 embed_task.py
+
+Mo file:
+
+nano verify_task.py
+
+Trong file nay, sua hai dong TODO:
+
+AUDIO_FILE = ""
+SIGN_FILE = ""
+
+thanh:
+
+AUDIO_FILE = "marked_ss.wav"
+SIGN_FILE = "message.txt"
+
+Sau do chay:
+
+python3 verify_task.py
+
 python3 attack.py marked_ss.wav volume.wav --type volume --factor 0.8
 python3 attack.py marked_ss.wav noise.wav --type noise --snr 30
 python3 attack.py marked_ss.wav cropped.wav --type crop --ratio 0.1
-python3 ss_selfmark_verify.py volume.wav --key 12345
-python3 ss_selfmark_verify.py noise.wav --key 12345
-python3 ss_selfmark_verify.py cropped.wav --key 12345
+
+Mo lai file verify_task.py va sua hai dong:
+
+AUDIO_FILE = "marked_ss.wav"
+SIGN_FILE = "message.txt"
+
+thanh:
+
+AUDIO_FILE = "volume.wav"
+SIGN_FILE = "message.txt"
+
+Sau do chay:
+
+python3 verify_task.py
+
+Mo lai file verify_task.py va sua hai dong:
+
+AUDIO_FILE = "volume.wav"
+SIGN_FILE = "message.txt"
+
+thanh:
+
+AUDIO_FILE = "noise.wav"
+SIGN_FILE = "message.txt"
+
+Sau do chay:
+
+python3 verify_task.py
+
+Mo lai file verify_task.py va sua hai dong:
+
+AUDIO_FILE = "noise.wav"
+SIGN_FILE = "message.txt"
+
+thanh:
+
+AUDIO_FILE = "cropped.wav"
+SIGN_FILE = "message.txt"
+
+Sau do chay:
+
+python3 verify_task.py
 
 Ket qua mong doi:
 

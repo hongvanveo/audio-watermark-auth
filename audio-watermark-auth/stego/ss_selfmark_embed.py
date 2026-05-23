@@ -68,6 +68,8 @@ def main():
     parser = argparse.ArgumentParser(description="Embed spread-spectrum self-marking watermark.")
     parser.add_argument("input")
     parser.add_argument("output")
+    parser.add_argument("--message", default="audio watermark auth")
+    parser.add_argument("--message-file")
     parser.add_argument("--key", required=True, type=int)
     args = parser.parse_args()
 
@@ -76,7 +78,15 @@ def main():
     if frame_count < 24:
         raise SystemExit("audio qua ngan cho watermark")
 
-    bits = payload_bits(args.key)
+    if args.message_file:
+        with open(args.message_file, "rb") as handle:
+            message_bytes = handle.read().strip()
+    else:
+        message_bytes = args.message.encode("utf-8")
+    if not message_bytes:
+        raise SystemExit("message rong")
+
+    bits = payload_bits(f"{args.key}:{hashlib.sha256(message_bytes).hexdigest()[:16]}")
     audio = [float(value) for value in samples]
     rms = math.sqrt(sum(value * value for value in audio) / max(1, len(audio)))
     alpha = rms * STRENGTH
@@ -85,7 +95,7 @@ def main():
         start = frame_index * FRAME_LEN
         bit_index = frame_index % len(bits)
         sign = bits[bit_index]
-        pn = pn_sequence(args.key, bit_index, FRAME_LEN)
+        pn = pn_sequence(f"{args.key}:{hashlib.sha256(message_bytes).hexdigest()[:16]}", bit_index, FRAME_LEN)
         for offset in range(FRAME_LEN):
             audio[start + offset] += sign * alpha * pn[offset]
 
