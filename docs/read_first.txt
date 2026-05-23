@@ -1,0 +1,5 @@
+Tai lieu huong dan bai lab o:
+   file:///home/student/labtainer/trunk/labs/audio-watermark-auth/docs/audio-watermark-auth-guide.txt
+
+Ban co the mo file nay bang cach nhap chuot phai
+va chon "Open Link".

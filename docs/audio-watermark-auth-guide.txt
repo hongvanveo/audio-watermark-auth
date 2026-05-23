@@ -1,0 +1,49 @@
+Lab: audio-watermark-auth
+
+Noi dung:
+- Dung spread-spectrum self-marking watermark de xac thuc audio.
+- Nhung watermark vao cover.wav bang key.
+- Tao 3 bien doi minh hoa: volume, noise, crop.
+- Kiem tra watermark va phan loai thay doi.
+- Chay checkwork de xac nhan ket qua.
+- attack.py con ho tro them lowpass, replace, reorder de tu mo rong thu nghiem.
+
+Tep can quan tam:
+- ~/stego/cover.wav
+- ~/stego/make_cover.py
+- ~/stego/ss_selfmark_embed.py
+- ~/stego/ss_selfmark_verify.py
+- ~/stego/attack.py
+- ~/stego/run_demo.py
+
+Cac lenh goi y:
+
+cd ~/stego
+python3 ss_selfmark_embed.py cover.wav marked_ss.wav --key 12345
+python3 attack.py marked_ss.wav volume.wav --type volume --factor 0.8
+python3 attack.py marked_ss.wav noise.wav --type noise --snr 30
+python3 attack.py marked_ss.wav cropped.wav --type crop --ratio 0.1
+python3 ss_selfmark_verify.py volume.wav --key 12345
+python3 ss_selfmark_verify.py noise.wav --key 12345
+python3 ss_selfmark_verify.py cropped.wav --key 12345
+
+Ket qua mong doi:
+
+File: volume.wav
+Watermark: FOUND
+Status: ACCEPTABLE MODIFICATION
+
+File: noise.wav
+Watermark: FOUND
+Status: ACCEPTABLE MODIFICATION
+
+File: cropped.wav
+Watermark: FOUND
+Status: MALICIOUS TAMPERING DETECTED
+
+Checkwork:
+- cover_available
+- marked_created
+- volume_acceptable
+- noise_acceptable
+- crop_malicious

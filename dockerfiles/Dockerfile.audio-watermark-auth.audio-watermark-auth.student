@@ -1,0 +1,12 @@
+FROM labtainers/labtainer.base2:latest
+LABEL version="1" base="labtainers/labtainer.base2.739eee77f8d3"
+USER root
+ARG lab
+ARG labdir
+ARG imagedir
+ENV HOME /home/ubuntu
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y python3 && rm -rf /var/lib/apt/lists/*
+RUN useradd -m -s /bin/bash ubuntu || true
+WORKDIR /home/ubuntu
+ADD $labdir/$lab.tar.gz /home/ubuntu
+RUN chown -R ubuntu:ubuntu /home/ubuntu && chmod +x /home/ubuntu/stego/*.py
