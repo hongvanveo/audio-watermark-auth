@@ -52,65 +52,18 @@ Mo file:
 
 nano verify_task.py
 
-Trong file nay, sua hai dong TODO:
+Khong can sua file nay cho cac buoc tiep theo.
+Tu buoc nay tro di, chi can dung lenh truc tiep:
 
-AUDIO_FILE = ""
-SIGN_FILE = ""
-
-thanh:
-
-AUDIO_FILE = "marked_ss.wav"
-SIGN_FILE = "message.txt"
-
-Sau do chay:
-
-python3 verify_task.py
+python3 ss_selfmark_verify.py marked_ss.wav --sign-file message.txt --key 12345
 
 python3 attack.py marked_ss.wav volume.wav --type volume --factor 0.8
 python3 attack.py marked_ss.wav noise.wav --type noise --snr 30
 python3 attack.py marked_ss.wav cropped.wav --type crop --ratio 0.1
 
-Mo lai file verify_task.py va sua hai dong:
-
-AUDIO_FILE = "marked_ss.wav"
-SIGN_FILE = "message.txt"
-
-thanh:
-
-AUDIO_FILE = "volume.wav"
-SIGN_FILE = "message.txt"
-
-Sau do chay:
-
-python3 verify_task.py
-
-Mo lai file verify_task.py va sua hai dong:
-
-AUDIO_FILE = "volume.wav"
-SIGN_FILE = "message.txt"
-
-thanh:
-
-AUDIO_FILE = "noise.wav"
-SIGN_FILE = "message.txt"
-
-Sau do chay:
-
-python3 verify_task.py
-
-Mo lai file verify_task.py va sua hai dong:
-
-AUDIO_FILE = "noise.wav"
-SIGN_FILE = "message.txt"
-
-thanh:
-
-AUDIO_FILE = "cropped.wav"
-SIGN_FILE = "message.txt"
-
-Sau do chay:
-
-python3 verify_task.py
+python3 ss_selfmark_verify.py volume.wav --sign-file message.txt --key 12345
+python3 ss_selfmark_verify.py noise.wav --sign-file message.txt --key 12345
+python3 ss_selfmark_verify.py cropped.wav --sign-file message.txt --key 12345
 
 Ket qua mong doi:
 
